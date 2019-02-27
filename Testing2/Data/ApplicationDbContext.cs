@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ExtendIndentityTesting.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Testing2.Models;
 
-namespace ExtendIndentityTesting.Data
+namespace Testing2.Data
 {
-    public class ApplicationDbContext : IdentityDbContext <ApplicationUser , ApplicationRole, string>
+    public class ApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

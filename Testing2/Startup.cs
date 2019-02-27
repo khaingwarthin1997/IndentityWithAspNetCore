@@ -10,12 +10,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ExtendIndentityTesting.Data;
+using Testing2.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ExtendIndentityTesting.Models;
 
-namespace ExtendIndentityTesting
+namespace Testing2
 {
     public class Startup
     {
@@ -40,23 +39,15 @@ namespace ExtendIndentityTesting
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            // services.AddDefaultIdentity<IdentityUser>()
-            services.AddIdentity<ApplicationUser, ApplicationRole>(
-                options => options.Stores.MaxLengthForKeys = 128)
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders()
+            services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, 
-            IHostingEnvironment env,ApplicationDbContext context,
-            RoleManager<ApplicationRole> roleManager,
-            UserManager<ApplicationUser> userManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -82,8 +73,6 @@ namespace ExtendIndentityTesting
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            DummyData.Initialize(context, userManager, roleManager).Wait();
         }
     }
 }
